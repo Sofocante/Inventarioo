@@ -11,7 +11,7 @@ namespace Inventario.DAL
     public class RepositorioDeVale : IRepositorio<Vale>
     {
         private string DBName = "Inventario.db";
-        private string TableName = "Vale";
+        private string TableName = "Vales";
 
         public List<Vale> Read {
             get
