@@ -29,12 +29,12 @@ namespace Inventario.BIZ
 
         public bool Eliminar(string id)
         {
-            throw new NotImplementedException();
+            return repositorio.Delete(id);
         }
 
         public bool Modificar(Empleado entidad)
         {
-            throw new NotImplementedException();
+            return repositorio.Update(entidad);
         }
     }
 }

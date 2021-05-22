@@ -7,5 +7,6 @@ namespace Inventarioo.COMMON.Interfaces
 {
     public interface IManejadorMateriales:IManejadorGenerico<Material>
     {
+        List<Material> MaterialesDeCategoria(string categoria);
     }
 }
