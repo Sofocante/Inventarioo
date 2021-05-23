@@ -42,26 +42,22 @@ namespace Inventario.DAL
                 return false;
             }
         }
-        public bool Delete(string id, Empleado entidad)
+        public bool Delete(string id)
         {
             try
             {
+                int r;
                 using (var db = new LiteDatabase(DBName))
                 {
                     var coleccion = db.GetCollection<Empleado>(TableName);
-                    coleccion.Delete(entidad.Id == id);
+                    r = coleccion.Delete(e=> e.Id == id);
                 }
-                return true;
+                return r > 0;
             }
             catch (Exception)
             {
                 return false;
             }
-        }
-
-        public bool Delete(string id)
-        {
-            throw new NotImplementedException();
         }
 
         public bool Update(Empleado entidadModificada)

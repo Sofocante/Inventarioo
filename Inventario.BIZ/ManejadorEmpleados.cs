@@ -32,6 +32,11 @@ namespace Inventario.BIZ
             return repositorio.Delete(id);
         }
 
+        public List<Empleado> EmpleadosPorArea(string are)
+        {
+            return Listar.Where(e => e.Area == are).ToList();
+        }
+
         public bool Modificar(Empleado entidad)
         {
             return repositorio.Update(entidad);
