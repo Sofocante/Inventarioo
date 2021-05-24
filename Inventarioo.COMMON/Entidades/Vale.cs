@@ -9,8 +9,7 @@ namespace Inventarioo.COMMON.Entidades
         public DateTime FechaHoraSolicitud { get; set; }
         public DateTime FechaEntrega { get; set; }
         public DateTime? FechaEntregaReal { get; set; }
-        public List<Material> MaterialesPrestados
-        { get; set; }
+        public List<Material> MaterialesPrestados { get; set; }
         public Empleado Solicitante { get; set; }
         public Empleado EncargadoDeAlmacen { get; set; }
 

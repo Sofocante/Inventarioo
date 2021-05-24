@@ -43,7 +43,39 @@
             </Grid>
         </TabItem>
         <TabItem Header="Materiales">
-            
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <WrapPanel Grid.Row="0">
+                    <Button x:Name="btnMaterialesNuevo" Click="BtnMaterialesNuevo_Click">Nuevo</Button>
+                    <Button x:Name="btnMaterialesEditar" Click="BtnMaterialesEditar_Click">Editar</Button>
+                    <Button x:Name="btnMaterialesGuardar" Click="BtnMaterialesGuardar_Click">Guardar</Button>
+                    <Button x:Name="btnMaterialesCancelar" Click="BtnMaterialesCancelar_Click">Cancelar</Button>
+                    <Button x:Name="btnMaterialesEliminar" Click="BtnMaterialesEliminar_Click">Eliminar</Button>
+                </WrapPanel>
+                <WrapPanel Grid.Row="1">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>Id:</TextBlock>
+                        <TextBlock x:Name="txbMaterialesId"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>Nombre:</TextBlock>
+                        <TextBox x:Name="txbMaterialesNombre" Width="200"></TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>Categoria:</TextBlock>
+                        <TextBox x:Name="txbMaterialesCategoria" Width="200"></TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>Descripcion:</TextBlock>
+                        <TextBox x:Name="txbMaterialesDescripcion" Width="200"></TextBox>
+                    </StackPanel>
+                </WrapPanel>
+                <DataGrid x:Name="dtgMateriales" Grid.Row="2" IsReadOnly="True"/>
+            </Grid>
         </TabItem>
         <TabItem Header="Reportes">
             

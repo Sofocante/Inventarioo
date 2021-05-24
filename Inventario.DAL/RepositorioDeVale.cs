@@ -10,7 +10,7 @@ namespace Inventario.DAL
 {
     public class RepositorioDeVale : IRepositorio<Vale>
     {
-        private string DBName = "Inventario.db";
+        private string DBName = @"C:\INV\Inventario.db";
         private string TableName = "Vales";
 
         public List<Vale> Read {
