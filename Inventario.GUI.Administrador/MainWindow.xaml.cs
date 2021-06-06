@@ -32,23 +32,53 @@ namespace Inventario.GUI.Administrador
 
         IManejadorEmpleados manejadorEmpleados;
         IManejadorMateriales manejadorMateriales;
+        IManejadorReportes manejadorReportes;
 
         accion accionEmpleados;
         accion accionMateriales;
+        accion accionReportes;
         public MainWindow()
         {
             InitializeComponent();
 
             manejadorEmpleados = new ManejadorEmpleados(new RepositorioDeEmpleados());
-            manejadorMateriales = new ManejadorMateriales(new RepositorioDeMaterial()); 
+            manejadorMateriales = new ManejadorMateriales(new RepositorioDeMaterial());
+            manejadorReportes = new ManejadorReportes(new RepositorioDeReporte());
 
             PonerBotonesEmpleadosEnEdicion(false);
-            LimpiarCamposDeEmpleados();       
+            LimpiarCamposDeEmpleados();
             ActualizarTablaEmpleados();
 
             PonerBotonesMaterialesEnEdicion(false);
             LimpiarCamposDeMateriales();
             ActualizarTablaMateriales();
+
+            PonerBotonesReportesEnEdicion(false);
+            LimpiarCamposDeReportes();
+            ActualizarTablaReportes();
+        }
+
+        private void ActualizarTablaReportes()
+        {
+            dtgReportes.ItemsSource = null;
+            dtgReportes.ItemsSource = manejadorReportes.Listar;
+        }
+
+        private void LimpiarCamposDeReportes()
+        {
+            txbReportesCategoria.Clear();
+            txbReportesDescripcion.Clear();
+            txbEmpleadosId.Text = "";
+            txbEmpleadosNombre.Clear();
+        }
+
+        private void PonerBotonesReportesEnEdicion(bool value)
+        {
+            btnReportesCancelar.IsEnabled = value;
+            btnReportesEditar.IsEnabled = !value;
+            btnReportesEliminar.IsEnabled = !value;
+            btnReportesGuardar.IsEnabled = value;
+            btnReportesNuevo.IsEnabled = !value;
         }
 
         private void ActualizarTablaMateriales()
@@ -115,12 +145,12 @@ namespace Inventario.GUI.Administrador
                 txbEmpleadosNombre.Text = emp.Nombre;
                 accionEmpleados = accion.Editar;
                 PonerBotonesEmpleadosEnEdicion(true);
-            }       
+            }
         }
 
         private void BtnEmpleadosGuardar_Click(object sender, RoutedEventArgs e)
         {
-            if(accionEmpleados== accion.Nuevo)
+            if (accionEmpleados == accion.Nuevo)
             {
                 Empleado emp = new Empleado()
                 {
@@ -146,7 +176,7 @@ namespace Inventario.GUI.Administrador
                 emp.Apellidos = txbEmpleadosApellidos.Text;
                 emp.Area = txbEmpledosArea.Text;
                 emp.Nombre = txbEmpleadosNombre.Text;
-                if(manejadorEmpleados.Modificar(emp))
+                if (manejadorEmpleados.Modificar(emp))
                 {
                     MessageBox.Show("Empleado modificado correctamente", "Inventarios", MessageBoxButton.OK, MessageBoxImage.Information);
                     LimpiarCamposDeEmpleados();
@@ -170,7 +200,7 @@ namespace Inventario.GUI.Administrador
         private void BtnEmpleadosEliminar_Click(object sender, RoutedEventArgs e)
         {
             Empleado emp = dtgEmpleados.SelectedItem as Empleado;
-            if(emp!=null)
+            if (emp != null)
             {
                 if (MessageBox.Show("Realmente deseas eliminar este empleado?", "Inventarios", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
@@ -201,7 +231,7 @@ namespace Inventario.GUI.Administrador
             accionMateriales = accion.Editar;
             PonerBotonesMaterialesEnEdicion(true);
             Material m = dtgMateriales.SelectedItem as Material;
-            if(m !=null)
+            if (m != null)
             {
                 txbMaterialesCategoria.Text = m.Categoria;
                 txbMaterialesDescripcion.Text = m.Descripcion;
@@ -212,7 +242,7 @@ namespace Inventario.GUI.Administrador
 
         private void BtnMaterialesGuardar_Click(object sender, RoutedEventArgs e)
         {
-            if(accionMateriales== accion.Nuevo)
+            if (accionMateriales == accion.Nuevo)
             {
                 Material m = new Material()
                 {
@@ -220,7 +250,7 @@ namespace Inventario.GUI.Administrador
                     Descripcion = txbMaterialesDescripcion.Text,
                     Nombre = txbMaterialesNombre.Text
                 };
-                if(manejadorMateriales.Agregar(m))
+                if (manejadorMateriales.Agregar(m))
                 {
                     MessageBox.Show("Material correctamente agregado", "Inventarios", MessageBoxButton.OK, MessageBoxImage.Information);
                     LimpiarCamposDeMateriales();
@@ -238,7 +268,7 @@ namespace Inventario.GUI.Administrador
                 m.Categoria = txbMaterialesCategoria.Text;
                 m.Descripcion = txbMaterialesDescripcion.Text;
                 m.Nombre = txbMaterialesNombre.Text;
-                if(manejadorMateriales.Modificar(m))
+                if (manejadorMateriales.Modificar(m))
                 {
                     MessageBox.Show("Material correctamente modificado", "Inventarios", MessageBoxButton.OK, MessageBoxImage.Information);
                     LimpiarCamposDeMateriales();
@@ -262,11 +292,11 @@ namespace Inventario.GUI.Administrador
         private void BtnMaterialesEliminar_Click(object sender, RoutedEventArgs e)
         {
             Material m = dtgMateriales.SelectedItem as Material;
-            if(m !=null)
+            if (m != null)
             {
-                if (MessageBox.Show("¿Realmente deseas eliminar este material?","Inventarios",MessageBoxButton.YesNo, MessageBoxImage.Question)== MessageBoxResult.Yes)
+                if (MessageBox.Show("¿Realmente deseas eliminar este material?", "Inventarios", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
-                    if(manejadorMateriales.Eliminar(m.Id))
+                    if (manejadorMateriales.Eliminar(m.Id))
                     {
                         MessageBox.Show("Material Eliminado correctamente", "Inventarios", MessageBoxButton.OK, MessageBoxImage.Information);
                         ActualizarTablaMateriales();
@@ -278,6 +308,101 @@ namespace Inventario.GUI.Administrador
                 }
             }
 
+        }
+
+        private void BtnReportesNuevo_Click(object sender, RoutedEventArgs e)
+        {
+            LimpiarCamposDeReportes();
+            accionReportes = accion.Nuevo;
+            PonerBotonesReportesEnEdicion(true);
+        }
+
+        private void BtnReportesEditar_Click(object sender, RoutedEventArgs e)
+        {
+            LimpiarCamposDeReportes();
+            accionReportes = accion.Editar;
+            PonerBotonesReportesEnEdicion(true);
+            Reporte m = dtgReportes.SelectedItem as Reporte;
+            if (m != null)
+            {
+                txbReportesCategoria.Text = m.Categoria;
+                txbReportesDescripcion.Text = m.Descripcion;
+                txbEmpleadosId.Text = m.Id;
+                txbEmpleadosNombre.Text = m.Nombre;
+            }
+
+        }
+
+        private void BtnReportesGuardar_Click(object sender, RoutedEventArgs e)
+        {
+            if (accionReportes == accion.Nuevo)
+            {
+                Reporte m = new Reporte()
+                {
+                    Categoria = txbReportesCategoria.Text,
+                    Descripcion = txbReportesDescripcion.Text,
+                    Nombre = txbReportesNombre.Text
+                };
+                if (manejadorReportes.Agregar(m))
+                {
+                    MessageBox.Show("Reportes correctamente agregado", "Inventarios", MessageBoxButton.OK, MessageBoxImage.Information);
+                    LimpiarCamposDeReportes();
+                    ActualizarTablaReportes();
+                    PonerBotonesReportesEnEdicion(false);
+                }
+                else
+                {
+                    MessageBox.Show("Algo salio mal", "Inventarios", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                Reporte m = dtgReportes.SelectedItem as Reporte;
+                m.Categoria = txbReportesCategoria.Text;
+                m.Descripcion = txbReportesDescripcion.Text;
+                m.Nombre = txbReportesNombre.Text;
+                if (manejadorReportes.Modificar(m))
+                {
+                    MessageBox.Show("Reporte correctamente modificado", "Inventarios", MessageBoxButton.OK, MessageBoxImage.Information);
+                    LimpiarCamposDeReportes();
+                    ActualizarTablaReportes();
+                    PonerBotonesReportesEnEdicion(false);
+                }
+                else
+                {
+                    MessageBox.Show("Algo salio mal", "Inventarios", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+
+            }
+
+        }
+
+        private void BtnReportesCancelar_Click(object sender, RoutedEventArgs e)
+        {
+            LimpiarCamposDeReportes();
+            PonerBotonesReportesEnEdicion(false);
+
+        }
+
+        private void BtnReportesEliminar_Click(object sender, RoutedEventArgs e)
+        {
+            Reporte m = dtgReportes.SelectedItem as Reporte;
+            if (m != null)
+            {
+                if (MessageBox.Show("¿Realmente deseas eliminar este Reporte?", "Inventarios", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    if (manejadorReportes.Eliminar(m.Id))
+                    {
+                        MessageBox.Show("Material Reporte correctamente", "Inventarios", MessageBoxButton.OK, MessageBoxImage.Information);
+                        ActualizarTablaReportes();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Algo salio mal", "Inventarios", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+
+            }
         }
     }
 }

@@ -9,19 +9,24 @@
     <TabControl>
         <TabItem Header="Empleados">
             <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="33"/>
+                    <ColumnDefinition Width="8*"/>
+                    <ColumnDefinition Width="243*"/>
+                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="auto"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
-                <WrapPanel Grid.Row="0">
+                <WrapPanel Grid.Row="0" Grid.ColumnSpan="3" Margin="0,0,0,160">
                     <Button x:Name="btnEmpleadosNuevo" Click="BtnEmpleadosNuevo_Click">Nuevo</Button>
                     <Button x:Name="btnEmpleadosEditar" Click="BtnEmpleadosEditar_Click">Editar</Button>
                     <Button x:Name="btnEmpleadosGuardar" Click="BtnEmpleadosGuardar_Click">Guardar</Button>
                     <Button x:Name="btnEmpleadosCancelar" Click="BtnEmpleadosCancelar_Click">Cancelar</Button>
                     <Button x:Name="btnEmpleadosEliminar" Click="BtnEmpleadosEliminar_Click">Eliminar</Button>
                 </WrapPanel>
-                <WrapPanel Grid.Row="1">
+                <WrapPanel Grid.ColumnSpan="3" Margin="0,20,0,142">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock>Id:</TextBlock>
                         <TextBlock x:Name="txbEmpleadosId"></TextBlock>
@@ -39,7 +44,7 @@
                         <TextBox x:Name="txbEmpledosArea" Width="200"></TextBox>
                     </StackPanel>
                 </WrapPanel>
-                <DataGrid x:Name="dtgEmpleados" Grid.Row="2" IsReadOnly="True"/>
+                <DataGrid x:Name="dtgEmpleados" IsReadOnly="True" Grid.ColumnSpan="3" Margin="0,38,0,0" Grid.RowSpan="3"/>
             </Grid>
         </TabItem>
         <TabItem Header="Materiales">
@@ -78,7 +83,39 @@
             </Grid>
         </TabItem>
         <TabItem Header="Reportes">
-            
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <WrapPanel Grid.Row="0">
+                    <Button x:Name="btnReportesNuevo" Click="BtnReportesNuevo_Click">Nuevo</Button>
+                    <Button x:Name="btnReportesEditar" Click="BtnReportesEditar_Click">Editar</Button>
+                    <Button x:Name="btnReportesGuardar" Click="BtnReportesGuardar_Click">Guardar</Button>
+                    <Button x:Name="btnReportesCancelar" Click="BtnReportesCancelar_Click">Cancelar</Button>
+                    <Button x:Name="btnReportesEliminar" Click="BtnReportesEliminar_Click">Eliminar</Button>
+                </WrapPanel>
+                <WrapPanel Grid.Row="1">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>Id:</TextBlock>
+                        <TextBlock x:Name="txbReportesId"></TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>Nombre:</TextBlock>
+                        <TextBox x:Name="txbReportesNombre" Width="200"></TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>Categoria:</TextBlock>
+                        <TextBox x:Name="txbReportesCategoria" Width="200"></TextBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock>Descripcion:</TextBlock>
+                        <TextBox x:Name="txbReportesDescripcion" Width="200"></TextBox>
+                    </StackPanel>
+                </WrapPanel>
+                <DataGrid x:Name="dtgReportes" Grid.Row="2" IsReadOnly="True"/>
+            </Grid>
         </TabItem>
     </TabControl>
 </Window>
